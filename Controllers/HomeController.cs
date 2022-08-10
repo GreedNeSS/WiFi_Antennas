@@ -8,11 +8,15 @@ namespace WiFi_Antennas_Win.Controllers
     [Authorize]
     public class HomeController : Controller
     {
+
+        private ApplicationContext db;
+
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ApplicationContext dbContext)
         {
             _logger = logger;
+            db = dbContext;
         }
 
         public IActionResult Index()
