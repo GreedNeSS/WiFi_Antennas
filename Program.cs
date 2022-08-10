@@ -1,5 +1,20 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using WiFi_Antennas_Win.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDbContext<ApplicationContext>(options =>
+{
+    options.UseSqlite(builder.Configuration.GetConnectionString("Default") ?? throw new Exception("Bad connection path"));
+});
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/auth/login";
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
+    });
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
