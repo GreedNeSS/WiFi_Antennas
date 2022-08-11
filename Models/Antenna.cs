@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace WiFi_Antennas_Win.Models
 {
+    [Index("Ip", IsUnique = true)]
     public class Antenna
     {
         public int Id { get; set; }
