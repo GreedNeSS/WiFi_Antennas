@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using WiFi_Antennas_Win.DAL.EF;
 using WiFi_Antennas_Win.DAL.Interfaces;
 using WiFi_Antennas_Win.DAL.Repositories;
+using WiFi_Antennas_Win.BLL.Interfaces;
+using WiFi_Antennas_Win.BLL.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,8 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
 });
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAccessUserService, AccessUserService>();
+builder.Services.AddTransient<ITokenCreator, TokenCreator>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
