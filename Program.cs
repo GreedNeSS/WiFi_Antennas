@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using WiFi_Antennas_Win.Models;
+using WiFi_Antennas_Win.DAL.EF;
+using WiFi_Antennas_Win.DAL.Interfaces;
+using WiFi_Antennas_Win.DAL.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,22 +11,23 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("Default") ?? throw new Exception("Bad connection path"));
 });
 
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
         options.LoginPath = "/auth/login";
         options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
     });
-// Add services to the container.
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+
     app.UseHsts();
 }
 

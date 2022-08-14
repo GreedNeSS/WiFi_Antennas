@@ -18,4 +18,9 @@
     <Folder Include="AppData\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WiFi_Antennas_Win.BLL\WiFi_Antennas_Win.BLL.csproj" />
+    <ProjectReference Include="..\WiFi_Antennas_Win.DAL\WiFi_Antennas_Win.DAL.csproj" />
+  </ItemGroup>
+
 </Project>
