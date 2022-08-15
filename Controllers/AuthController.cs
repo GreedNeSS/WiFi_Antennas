@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WiFi_Antennas_Win.BLL.DTO;
 using WiFi_Antennas_Win.BLL.Interfaces;
+using WiFi_Antennas_Win.Models;
 
 namespace WiFi_Antennas_Win.Controllers
 {
@@ -14,26 +15,27 @@ namespace WiFi_Antennas_Win.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(UserDTO? user, [FromServices] IAccessUserService accessUserService,
+        [ValidateAntiForgeryToken]
+        public IActionResult Login(UserViewModel userViewModel, [FromServices] IAccessUserService accessUserService,
             [FromServices] ITokenCreator tokenCreator)
         {
-            if (user != null)
+            if (userViewModel != null)
             {
-                if (!accessUserService.IsAllowed(user))
+                UserDTO user = new UserDTO { Login = userViewModel.Login, Password = userViewModel.Password };
+
+                if (accessUserService.IsAllowed(user))
                 {
-                    return View(user);
-                }
-                else
-                {
-                    
                     Response.Redirect("/home/index");
                     return SignIn(tokenCreator.GetClaimsPrincipal(user));
                 }
                 
             }
-            return View(user);
+
+            return View(userViewModel);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Logout()
         {
             Response.Redirect("/auth/login");

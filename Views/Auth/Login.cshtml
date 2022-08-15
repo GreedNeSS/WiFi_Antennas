@@ -1,10 +1,17 @@
-﻿@model WiFi_Antennas_Win.BLL.DTO.UserDTO
+﻿@model UserViewModel
 
 <h2>Ввредите данные для авторизации:</h2>
 <form method="post">
-    <label asp-for=Login>Логин: </label>
-    <input asp-for=Login />
-    <label asp-for=Password>Пароль: </label>
-    <input asp-for=Password />
+    <div>
+        <label asp-for=Login>Логин: </label>
+        <input asp-for=Login />
+        <span asp-validation-for="Login" ></span>
+    </div>
+    <div>
+        <label asp-for=Password>Пароль: </label>
+        <input asp-for=Password />
+        <span asp-validation-for="Password" ></span>
+    </div>
+    @Html.AntiForgeryToken()
     <button>Авторизоваться</button>
 </form>
