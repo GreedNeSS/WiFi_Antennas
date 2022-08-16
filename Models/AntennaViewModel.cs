@@ -4,7 +4,8 @@ using Microsoft.EntityFrameworkCore;
 namespace WiFi_Antennas_Win.Models
 {
     [Index("Ip", IsUnique = true)]
-    public class Antenna
+    public class AntennaViewModel
+
     {
         public int Id { get; set; }
 
