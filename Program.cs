@@ -8,7 +8,7 @@ using WiFi_Antennas_Win.BLL.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<ApplicationContext>(options =>
+builder.Services.AddDbContext<UserContext>(options =>
 {
     options.UseSqlite(builder.Configuration.GetConnectionString("Default") ?? throw new Exception("Bad connection path"));
 });
